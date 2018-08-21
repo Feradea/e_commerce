@@ -1,0 +1,1 @@
+<a class="btn btn-outline-dark btn-block" href='components/in/admin/logout.php'>Logout</a>

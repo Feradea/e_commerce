@@ -2,27 +2,9 @@
     <div class="product_list">
         <?php
 
-    if(isset($_GET["brand"]))
-    {
-        $brand = $_GET["brand"];
-
-        $sql = "SELECT * FROM products p
+$sql = "SELECT * FROM products p
         JOIN brands b ON b.BrandID = p.ProductBrandID_FK
-        JOIN categories c ON c.CategoryID = p.ProductCategoryID_FK
-        WHERE b.BrandName = '$brand'";
-    }
-
-    if(isset($_GET["category"]))
-    {
-        $category = $_GET["category"];
-
-        $sql = "SELECT * FROM products p
-        JOIN brands b ON b.BrandID = p.ProductBrandID_FK
-        JOIN categories c ON c.CategoryID = p.ProductCategoryID_FK
-        WHERE c.CategoryName = '$category'";
-    }
-
-
+        JOIN categories c ON c.CategoryID = p.ProductCategoryID_FK";
 $result = mysqli_query($connection, $sql);
 
 if (mysqli_num_rows($result) > 0) {

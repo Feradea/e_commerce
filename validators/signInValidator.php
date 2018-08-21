@@ -66,7 +66,9 @@ if (!isset($_SESSION["id_user"])) {
             session_regenerate_id(true);
             $_SESSION["id_user"] = $data['user_id'];
             $_SESSION["user_name"] = $data['user_lname'] . " " . $data['user_fname'];
+            $_SESSION["isAdmin"] = adminExists($data['user_id']);
 
+            
             date_default_timezone_set("Europe/Belgrade");
             $last_visit = date("Y-m-d H:i:s");
             $last_ip = $_SERVER["REMOTE_ADDR"];

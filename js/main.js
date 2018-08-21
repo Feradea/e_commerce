@@ -15,7 +15,6 @@ var signInMsg = document.getElementById("signInMsg");
 //     signUpMsgArea.style.display = "none";
 // }
 
-
 /*Register function*/
 function signUp() {
   var params = $("#signUpForm").serialize();
@@ -153,5 +152,353 @@ window.addEventListener("load", function() {
   $("button#forgotPassSubmit").click(function(event) {
     event.preventDefault();
     forgotPass();
+  });
+});
+
+$(document).ready(function() {
+  $('form#addUserForm').on('submit', function(e) {
+    e.preventDefault();
+    let _this = $('form#addUserForm');
+
+    _this.validate({
+      rules: {
+        password: "required",
+        password_again: {
+          equalTo: "#password"
+        }
+    }});
+
+    if (_this.valid()) {
+      $.ajax({
+        type: "POST",
+        url: "components/in/admin/user/controllers/add.php",
+        data: _this.serializeArray(),
+        async: true,
+        cache: false,
+        success: function(data) {
+          let res = JSON.parse(data);
+          if (res.exists) {
+            $.notify({ message: 'User already exists!' },{ type: 'danger', placement: { from: "bottom", align: "right" },});
+          }
+          if (res.success) {
+            $.notify({ message: 'User created successfully!' },{ type: 'success', placement: { from: "bottom", align: "right" },});
+            window.location = "index.php?user_settings=add";
+          } else {
+            $.notify({ message: 'Something went wrong..' },{ type: 'danger', placement: { from: "bottom", align: "right" },});
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log("error " + xhr + "\n" + status + "\n" + error);
+        }
+      });
+    }
+  });
+
+  $('form#editUserForm').on('submit', function(e) {
+    e.preventDefault();
+    let _this = $('form#editUserForm');
+
+    _this.validate({
+      rules: {
+        password_again: {
+          equalTo: "#password"
+        }
+    }});
+
+    if (_this.valid()) {
+      $.ajax({
+        type: "POST",
+        url: "components/in/admin/user/controllers/edit.php",
+        data: _this.serializeArray(),
+        async: true,
+        cache: false,
+        success: function(data) {
+          let res = JSON.parse(data);
+          if (res.success) {
+            $.notify({ message: 'User updated successfully!' },{ type: 'success', placement: { from: "bottom", align: "right" },});
+            window.location = "index.php?user_settings=edit";
+          } else {
+            $.notify({ message: 'Something went wrong..' },{ type: 'danger', placement: { from: "bottom", align: "right" },});
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log("error " + xhr + "\n" + status + "\n" + error);
+        }
+      });
+    }
+  });
+
+  $('form#deleteUserForm').on('submit', function(e) {
+    e.preventDefault();
+    if(confirm("Do you really want to delete this user?")) {
+      $.ajax({
+        type: "POST",
+        url: "components/in/admin/user/controllers/delete.php",
+        data: $('form#deleteUserForm').serializeArray(),
+        async: true,
+        cache: false,
+        success: function(data) {
+          let res = JSON.parse(data);
+          if (res.success) {
+            $.notify({ message: 'User successfully deleted!' },{ type: 'success', placement: { from: "bottom", align: "right" },});
+            window.location = "index.php?user_settings=delete";
+          } else {
+            $.notify({ message: 'Something went wrong..' },{ type: 'danger', placement: { from: "bottom", align: "right" },});
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log("error " + xhr + "\n" + status + "\n" + error);
+        }
+      });
+    }
+  });
+
+  $('form#deleteProductForm').on('submit', function(e) {
+    e.preventDefault();
+    if(confirm("Do you really want to delete this product?")) {
+      $.ajax({
+        type: "POST",
+        url: "components/in/admin/product/controllers/delete.php",
+        data: $('form#deleteProductForm').serializeArray(),
+        async: true,
+        cache: false,
+        success: function(data) {
+          let res = JSON.parse(data);
+          if (res.success) {
+            $.notify({ message: 'Product successfully deleted!' },{ type: 'success', placement: { from: "bottom", align: "right" },});
+            window.location = "index.php?product_settings=delete";
+          } else {
+            $.notify({ message: 'Something went wrong..' },{ type: 'danger', placement: { from: "bottom", align: "right" },});
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log("error " + xhr + "\n" + status + "\n" + error);
+        }
+      });
+    }
+  });
+
+  $('form#deleteBrandForm').on('submit', function(e) {
+    e.preventDefault();
+    if(confirm("Do you really want to delete this brand?")) {
+      $.ajax({
+        type: "POST",
+        url: "components/in/admin/brand/controllers/delete.php",
+        data: $('form#deleteBrandForm').serializeArray(),
+        async: true,
+        cache: false,
+        success: function(data) {
+          let res = JSON.parse(data);
+          if (res.success) {
+            $.notify({ message: 'Brand successfully deleted!' },{ type: 'success', placement: { from: "bottom", align: "right" },});
+            window.location = "index.php?brand_settings=delete";
+          } else {
+            $.notify({ message: 'Something went wrong..' },{ type: 'danger', placement: { from: "bottom", align: "right" },});
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log("error " + xhr + "\n" + status + "\n" + error);
+        }
+      });
+    }
+  });
+
+  $('form#deleteCategoryForm').on('submit', function(e) {
+    e.preventDefault();
+    if(confirm("Do you really want to delete this category?")) {
+      $.ajax({
+        type: "POST",
+        url: "components/in/admin/category/controllers/delete.php",
+        data: $('form#deleteCategoryForm').serializeArray(),
+        async: true,
+        cache: false,
+        success: function(data) {
+          let res = JSON.parse(data);
+          if (res.success) {
+            $.notify({ message: 'Category successfully deleted!' },{ type: 'success', placement: { from: "bottom", align: "right" },});
+            window.location = "index.php?category_settings=delete";
+          } else {
+            $.notify({ message: 'Something went wrong..' },{ type: 'danger', placement: { from: "bottom", align: "right" },});
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log("error " + xhr + "\n" + status + "\n" + error);
+        }
+      });
+    }
+  });
+
+  $('form#addBrandForm').on('submit', function(e) {
+    e.preventDefault();
+    let _this = $('form#addBrandForm');
+
+    _this.validate();
+
+    if (_this.valid()) {
+      $.ajax({
+        type: "POST",
+        url: "components/in/admin/brand/controllers/add.php",
+        data: _this.serializeArray(),
+        async: true,
+        cache: false,
+        success: function(data) {
+          let res = JSON.parse(data);
+          if (res.success) {
+            $.notify({ message: 'Brand created successfully!' },{ type: 'success', placement: { from: "bottom", align: "right" },});
+            window.location = "index.php?brand_settings=add";
+          } else {
+            $.notify({ message: 'Something went wrong..' },{ type: 'danger', placement: { from: "bottom", align: "right" },});
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log("error " + xhr + "\n" + status + "\n" + error);
+        }
+      });
+    }
+  });
+
+  $('form#editBrandForm').on('submit', function(e) {
+    e.preventDefault();
+    let _this = $('form#editBrandForm');
+
+    _this.validate();
+
+    if (_this.valid()) {
+      $.ajax({
+        type: "POST",
+        url: "components/in/admin/brand/controllers/edit.php",
+        data: _this.serializeArray(),
+        async: true,
+        cache: false,
+        success: function(data) {
+          let res = JSON.parse(data);
+          if (res.success) {
+            $.notify({ message: 'Brand edited successfully!' },{ type: 'success', placement: { from: "bottom", align: "right" },});
+            window.location = "index.php?brand_settings=edit";
+          } else {
+            $.notify({ message: 'Something went wrong..' },{ type: 'danger', placement: { from: "bottom", align: "right" },});
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log("error " + xhr + "\n" + status + "\n" + error);
+        }
+      });
+    }
+  });
+
+  $('form#addCategoryForm').on('submit', function(e) {
+    e.preventDefault();
+    let _this = $('form#addCategoryForm');
+
+    _this.validate();
+
+    if (_this.valid()) {
+      $.ajax({
+        type: "POST",
+        url: "components/in/admin/category/controllers/add.php",
+        data: _this.serializeArray(),
+        async: true,
+        cache: false,
+        success: function(data) {
+          let res = JSON.parse(data);
+          if (res.success) {
+            $.notify({ message: 'Category created successfully!' },{ type: 'success', placement: { from: "bottom", align: "right" },});
+            window.location = "index.php?category_settings=add";
+          } else {
+            $.notify({ message: 'Something went wrong..' },{ type: 'danger', placement: { from: "bottom", align: "right" },});
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log("error " + xhr + "\n" + status + "\n" + error);
+        }
+      });
+    }
+  });
+
+  $('form#editCategoryForm').on('submit', function(e) {
+    e.preventDefault();
+    let _this = $('form#editCategoryForm');
+
+    _this.validate();
+
+    if (_this.valid()) {
+      $.ajax({
+        type: "POST",
+        url: "components/in/admin/category/controllers/edit.php",
+        data: _this.serializeArray(),
+        async: true,
+        cache: false,
+        success: function(data) {
+          let res = JSON.parse(data);
+          if (res.success) {
+            $.notify({ message: 'Category edited successfully!' },{ type: 'success', placement: { from: "bottom", align: "right" },});
+            window.location = "index.php?category_settings=edit";
+          } else {
+            $.notify({ message: 'Something went wrong..' },{ type: 'danger', placement: { from: "bottom", align: "right" },});
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log("error " + xhr + "\n" + status + "\n" + error);
+        }
+      });
+    }
+  });
+
+  $('form#editProductForm').on('submit', function(e) {
+    e.preventDefault();
+    let _this = $('form#editProductForm');
+
+    _this.validate();
+
+    if (_this.valid()) {
+      $.ajax({
+        type: "POST",
+        url: "components/in/admin/product/controllers/edit.php",
+        data: _this.serializeArray(),
+        async: true,
+        cache: false,
+        success: function(data) {
+          let res = JSON.parse(data);
+          if (res.success) {
+            $.notify({ message: 'Product edited successfully!' },{ type: 'success', placement: { from: "bottom", align: "right" },});
+            window.location = "index.php?product_settings=edit";
+          } else {
+            $.notify({ message: 'Something went wrong..' },{ type: 'danger', placement: { from: "bottom", align: "right" },});
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log("error " + xhr + "\n" + status + "\n" + error);
+        }
+      });
+    }
+  });
+
+  $('form#addProductForm').on('submit', function(e) {
+    e.preventDefault();
+    let _this = $('form#addProductForm');
+
+    _this.validate();
+
+    if (_this.valid()) {
+      $.ajax({
+        type: "POST",
+        url: "components/in/admin/product/controllers/add.php",
+        data: _this.serializeArray(),
+        async: true,
+        cache: false,
+        success: function(data) {
+          let res = JSON.parse(data);
+          if (res.success) {
+            $.notify({ message: 'Product created successfully!' },{ type: 'success', placement: { from: "bottom", align: "right" },});
+            window.location = "index.php?product_settings=edit";
+          } else {
+            $.notify({ message: 'Something went wrong..' },{ type: 'danger', placement: { from: "bottom", align: "right" },});
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log("error " + xhr + "\n" + status + "\n" + error);
+        }
+      });
+    }
   });
 });

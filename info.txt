@@ -1,0 +1,17 @@
+bb.users table
+
+UserID
+UserUserLevelID_FK
+UserFirstName
+UserLastName
+UserEmail
+UserPassword
+UserForgetPassKey
+UserActivationKey
+UserCreated = Registration Date
+UserModified = When user update
+UserLastVisit
+UserLastIP
+UserNewsletter
+UserStatus
+UserDeactive

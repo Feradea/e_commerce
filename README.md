@@ -1,2 +1,1 @@
-# e_commerce
-School Project
+# bb_project

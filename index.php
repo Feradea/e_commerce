@@ -45,7 +45,16 @@ if (isset($_SESSION["id_user"]) && userExists($_SESSION["id_user"]) && !adminExi
         $op = mysqli_real_escape_string($connection, $_GET["op"]);
     }
 
+    // switch ($op) {
+    //     case "products":
+    //         include "components/products.php";
+    //         break;
 
+    //     default:
+    //         include "components/carousel.html";
+    //         include "components/onsaleproducts.php";
+    //         include "components/newproducts.php";
+    // }
 
 }
 /*User Type: Admin*/
@@ -60,7 +69,29 @@ elseif (isset($_SESSION["id_user"]) && !userExists($_SESSION["id_user"]) && admi
     
     <div class="container">
 
+    <?php
+    
 
+    $op = "";
+
+    // if (isset($_GET["op"])) 
+    //     $op = mysqli_real_escape_string($connection, $_GET["op"]);
+
+    //     echo "OP = " . $op;
+
+    // switch ($op)
+    // {
+    //     case "products":
+    //         include("components/products.php");
+    //         break;
+
+    //     default:
+    //         include("components/slickcarousel.html");
+    //         include("components/onsaleproducts.php");
+    //         include("components/newproducts.php");
+    // }
+
+    ?>
     
     </div>
     <?php
@@ -72,7 +103,23 @@ else {
     require "components/out/navigation_bar.php";
 
     echo "<div class='container-fluid'>";
+        $op = "";
 
+        if (isset($_GET["op"])) 
+            $op = mysqli_real_escape_string($connection, $_GET["op"]);
+
+        switch ($op)
+        {
+            case "products":
+                include("components/products.php");
+                break;
+
+            default:
+                include("components/carousel.php");
+                include("components/on-sale-products.php");
+                include("components/new-products.php");
+                // include("try.php");
+        }
     }
     echo "</div>";
     include "components/footer.php";
@@ -103,4 +150,57 @@ else {
 
     <script src="slick/slick.js" type="text/javascript" charset="utf-8"></script>
 
-    
+    <script type="text/javascript">
+        $(document).on('ready', function() {
+
+            $('.center').slick({
+            dots: true,
+            centerMode: true,
+            centerPadding: '60px',
+            autoplay: true,
+            autoplaySpeed: 2000,
+            slidesToShow: 5,
+            arrows: true,
+            responsive: [
+                {
+                breakpoint: 1441,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 4
+                }
+                },
+                {
+                breakpoint: 1025,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 3
+                }
+                },
+                {
+                breakpoint: 769,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 2
+                }
+                },
+                {
+                breakpoint: 426,
+                settings: {
+                    dots: true,
+                    infinite: true,
+                    speed: 500,
+                    fade: true,
+                    slidesToShow: 1
+                }
+                },
+                
+            ]
+            });
+        });
+    </script>

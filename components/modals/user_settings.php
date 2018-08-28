@@ -6,8 +6,9 @@
         </button>
     </div>
     <div class="modal-body">
-        <a class="btn btn-outline-info btn-block" href='components/in/user/logout.php'>User Account Info</a>
-        <a class="btn btn-outline-info btn-block" href='components/in/user/logout.php'>User Preferences</a>
+        <a class="btn btn-outline-info btn-block" href=''>User Account Info</a>
+        <!-- <a class="btn btn-outline-info btn-block" data-toggle='modal' data-target='#historyModal' onclick='hs_shopping(1, \"\")'>Porudžbenice</a> -->
+        <a class="btn btn-outline-info btn-block" href=''>User Preferences</a>
         <a class="btn btn-outline-dark btn-block" href='components/in/user/logout.php'>Logout</a>
     </div>
     <div class="modal-footer">

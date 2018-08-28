@@ -41,3 +41,9 @@ function adminExists($id){
 
     return mysqli_num_rows($result) > 0 ? true : false;
 }
+
+function removeParam($url, $param) {
+    $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*$/', '', $url);
+    $url = preg_replace('/(&|\?)'.preg_quote($param).'=[^&]*&/', '$1', $url);
+    return $url;
+}

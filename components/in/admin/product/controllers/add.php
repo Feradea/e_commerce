@@ -26,7 +26,7 @@
   $categoryId = isset($_POST['categoryId']) ? strip_tags(trim(mysqli_real_escape_string($connection,trim($_POST['categoryId'])))) : "";
   
   $insert = mysqli_query($connection, "INSERT INTO products(ProductCategoryID_FK,ProductBrandID_FK,ProductName,ProductWeight,ProductWeightUnit,ProductShortDesc,ProductLongDesc,ProductProperties,ProductPrice,ProductPromotionalPrice,ProductQuantity,ProductStock,ProductSKU,ProductStatus,ProductCreated) VALUES(
-    '{$categoryId}', '{$brandId}', '{$name}', '{$weight}', '{$unit}', '{$shortDescription}', '{$longDescription}', '{$properties}', '{$price}', '{$promoPrice}', '{$quantity}', '{$stock}', '{$sku}', '{$status}', NOW())");
+    '{$categoryId}', '{$brandId}', '{$name}', '{$weight}', '{$unit}', '{$shortDescription}', '{$longDescription}', '{$properties}', '{$price}', '{$promoPrice}', '{$quantity}', '{$stock}', '{$sku}', '{$status}', NOW()") or die($connection);
 
   if ($insert) {
     $res['success'] = true;

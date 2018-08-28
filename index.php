@@ -17,7 +17,10 @@ require "components/functions.php";
         <!-- links-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/style.css">
+        
+        <link rel="stylesheet" type="text/css" href="./slick/slick.css">
+        <link rel="stylesheet" type="text/css" href="./slick/slick-theme.css">
+        <link rel="stylesheet" href="css/style_main.css">
 
 
     </head>
@@ -33,24 +36,27 @@ if (isset($_SESSION["id_user"]) && userExists($_SESSION["id_user"]) && !adminExi
         $_SESSION["gen_time"] = time();
     }
 
-    require "components/in/user/navigation_bar.php";
+    include "components/in/user/navigation_bar.php";
 
-    $op = "";
+    echo "<div class='container-fluid'>";
+   
+    $op = isset($_GET['op']) ? $_GET['op'] : null;
 
-    if (isset($_GET["op"])) {
-        $op = mysqli_real_escape_string($connection, $_GET["op"]);
+    switch ($op)
+    {
+        case "products":
+            include "components/products.php";
+            break;
+
+        case "about_us":
+            include("components/about_us.php");
+            break;
+
+        default:
+            include "components/carousel.php";
+            include "components/on-sale-products.php";
+            include "components/new-products.php";
     }
-
-    // switch ($op) {
-    //     case "products":
-    //         include "components/products.php";
-    //         break;
-
-    //     default:
-    //         include "components/carousel.html";
-    //         include "components/onsaleproducts.php";
-    //         include "components/newproducts.php";
-    // }
 
 }
 /*User Type: Admin*/
@@ -132,31 +138,7 @@ elseif (isset($_SESSION["id_user"]) && !userExists($_SESSION["id_user"]) && admi
                         break;
                 }
             ?>
-        </div>
-    <?php
-    
-
-    $op = "";
-
-    // if (isset($_GET["op"])) 
-    //     $op = mysqli_real_escape_string($connection, $_GET["op"]);
-
-    //     echo "OP = " . $op;
-
-    // switch ($op)
-    // {
-    //     case "products":
-    //         include("components/products.php");
-    //         break;
-
-    //     default:
-    //         include("components/slickcarousel.html");
-    //         include("components/onsaleproducts.php");
-    //         include("components/newproducts.php");
-    // }
-
-    ?>
-    
+        </div> 
     </div>
     <?php
     
@@ -166,24 +148,28 @@ elseif (isset($_SESSION["id_user"]) && !userExists($_SESSION["id_user"]) && admi
 else {
     require "components/out/navigation_bar.php";
 
-    $op = "";
+    echo "<div class='container-fluid'>";
+   
+    $op = isset($_GET['op']) ? $_GET['op'] : null;
 
-    if (isset($_GET["op"])) 
-        $op = mysqli_real_escape_string($connection, $_GET["op"]);
+        switch ($op)
+        {
+            case "products":
+            require("components/products.php");
+                break;
 
-    switch ($op)
-    {
-        case "products":
-            include("components/products.php");
+            case "about_us":
+                include("components/about_us.php");
             break;
 
-        default:
-            include("components/carousel.php");
-            include("components/on-sale-products.php");
-            include("components/new-products.php");
+            default:
+                require("components/carousel.php");
+                require("components/on-sale-products.php");
+                require("components/new-products.php");
+        }
     }
-}
-    include "components/footer.php";
+    echo "</div>";
+    require ("components/footer.php");
     mysqli_close($connection);
 
 ?>
@@ -202,10 +188,69 @@ else {
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
 
+<script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
     <script src="js/jquery.validate.min.js"></script>
 
     <script src="js/bootstrap-notify.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/modal.js"></script>
 
+
     <script defer src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
+
+    <script src="slick/slick.js" type="text/javascript" charset="utf-8"></script>
+
+    <script type="text/javascript">
+        $(document).on('ready', function() {
+
+            $('.center').slick({
+            dots: true,
+            centerMode: true,
+            centerPadding: '60px',
+            autoplay: true,
+            autoplaySpeed: 2000,
+            slidesToShow: 5,
+            arrows: true,
+            responsive: [
+                {
+                breakpoint: 1441,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 4
+                }
+                },
+                {
+                breakpoint: 1025,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 3
+                }
+                },
+                {
+                breakpoint: 769,
+                settings: {
+                    arrows: false,
+                    centerMode: true,
+                    centerPadding: '40px',
+                    slidesToShow: 2
+                }
+                },
+                {
+                breakpoint: 426,
+                settings: {
+                    dots: true,
+                    infinite: true,
+                    speed: 500,
+                    fade: true,
+                    slidesToShow: 1
+                }
+                },
+                
+            ]
+            });
+        });
+    </script>

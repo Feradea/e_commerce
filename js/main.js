@@ -122,38 +122,37 @@ function forgotPass() {
   });
 }
 
-window.addEventListener("load", function() {
-  $("button#signUpSubmit").click(function(event) {
-    event.preventDefault();
-    signUp();
-    console.log("Register");
-
-    // window.setTimeout(function(){location.reload()},8000);
-  });
-
-//   if ($("#signInForm") != null) {
-//     $("#signInForm").submit(function(event) {
-//       event.preventDefault();
-//       signIn();
-//       console.log("Login");
-
-//       // window.setTimeout(function(){location.reload()},8000);
+/*Add to Cart function*/
+// function  addToCart() {
+//     var params = $("#addToCartForm").serialize();
+  
+//     console.log("Params: " + params);
+  
+//     $.ajax({
+//       type: "POST",
+//       url: "validators/order.php",
+//       data: params,
+//       async: true,
+//       cache: false,
+//       success: function(data) {
+//         var json = eval(data);
+  
+//         if (json["success"] == "true") {
+//           console.log("stage1");
+//         } else {
+//             console.log("stage2");
+//         }
+  
+//         console.log("stage3");
+//       },
+//       error: function(xhr, status, error) {
+//         console.log("error " + xhr + "\n" + status + "\n" + error);
+//       }
 //     });
 //   }
 
-  $("button#signInSubmit").click(function (event) {
-      event.preventDefault();
-      signIn();
-      console.log("Login2");
 
-      // window.setTimeout(function(){location.reload()},8000);
-  });
-
-  $("button#forgotPassSubmit").click(function(event) {
-    event.preventDefault();
-    forgotPass();
-  });
-});
+// 
 
 $(document).ready(function() {
   $('form#addUserForm').on('submit', function(e) {
@@ -502,3 +501,38 @@ $(document).ready(function() {
     }
   });
 });
+
+
+
+
+window.addEventListener("load", function() {
+    $("button#signUpSubmit").click(function(event) {
+      event.preventDefault();
+      signUp();
+      console.log("Register");
+  
+      // window.setTimeout(function(){location.reload()},8000);
+    });
+  
+  
+    $("button#signInSubmit").click(function (event) {
+        event.preventDefault();
+        signIn();
+        console.log("Login2");
+  
+        // window.setTimeout(function(){location.reload()},8000);
+    });
+  
+    $("button#forgotPassSubmit").click(function(event) {
+      event.preventDefault();
+      forgotPass();
+    });
+
+    // $("button#addToCartSubmit").click(function (event) {
+    //     event.preventDefault();
+    //     addToCart();
+    //     console.log("AddToCart");
+
+    // });
+
+  });
